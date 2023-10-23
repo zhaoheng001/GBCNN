@@ -115,7 +115,7 @@ class Places2Data_inp (torch.utils.data.Dataset):
 		self.num_imgs = len(self.img_paths)
 		# normalizes the image: (img - MEAN) / STD and converts to tensor
 		self.img_transform = transforms.Compose([transforms.ToTensor(), transforms.Grayscale(num_output_channels=1)])
-		self.mask_transform = transforms.Compose([transforms.ToTensor(), transforms.Grayscale(num_output_channels=1)])
+		self.mask_transform = transforms.Compose([transforms.ToTensor()])
 		# self.img_transform = transforms.Compose([transforms.ToTensor()])
 		# self.mask_transform = transforms.Compose([transforms.ToTensor()])
 
@@ -130,8 +130,8 @@ class Places2Data_inp (torch.utils.data.Dataset):
 		
 		# print(gt_img)
 		mask = Image.open(self.mask_paths[index])
-		#mask = ImageOps.grayscale(mask)
-		mask = self.mask_transform(mask.convert('RGB'))
+		mask = self.mask_transform(mask.convert('RGB'))[0,:,:]
+                mask = torch.unsqueeze(mask, 0)
 		#noise_img = gt_img_grey + noise
 		image_mask = gt_img_grey * (1-mask) + mask
 		#noise_img = torch.unsqueeze(image_mask, 0)
