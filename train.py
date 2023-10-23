@@ -50,22 +50,22 @@ def total_variation_loss(image):
     loss = l1(image[:, :, :, :-1], image[:, :, :, 1:]) + l1(image[:, :, :-1, :], image[:, :, 1:, :])
     return loss	
 #define psnr function for a batch of images
-def PSNR(output, gt):
-	output = output.cpu().numpy()
-	output = np.transpose(output, (0, 2, 3, 1))
-	output = np.squeeze(output)
-	output = output * 255
-	output = output.astype(np.uint8)
-	gt = gt.cpu().numpy()
-	gt = np.transpose(gt, (0, 2, 3, 1))
-	gt = np.squeeze(gt)
-	gt = gt * 255
-	gt = gt.astype(np.uint8)
-	psnr = 0.0
-	for i in range(output.shape[0]):
-		psnr += cv2.PSNR(output[i], gt[i])
-	psnr = psnr / output.shape[0]
-	return psnr
+# def PSNR(output, gt):
+# 	output = output.cpu().numpy()
+# 	output = np.transpose(output, (0, 2, 3, 1))
+# 	output = np.squeeze(output)
+# 	output = output * 255
+# 	output = output.astype(np.uint8)
+# 	gt = gt.cpu().numpy()
+# 	gt = np.transpose(gt, (0, 2, 3, 1))
+# 	gt = np.squeeze(gt)
+# 	gt = gt * 255
+# 	gt = gt.astype(np.uint8)
+# 	psnr = 0.0
+# 	for i in range(output.shape[0]):
+# 		psnr += cv2.PSNR(output[i], gt[i])
+# 	psnr = psnr / output.shape[0]
+# 	return psnr
 
 def psnr(output, gt):
 	#gt = gt.cpu().numpy()
@@ -134,7 +134,7 @@ parser.add_argument('--lr', default=0.001, type=float)
 
 parser.add_argument("--lr_drop_rate", type=float, default=0.90)
 parser.add_argument("--fine_tune_lr", type=float, default=5e-5)
-parser.add_argument("--batch_size", type=int, default=32)
+parser.add_argument("--batch_size", type=int, default=10)
 parser.add_argument("--epochs", type=int, default=100)
 parser.add_argument("--fine_tune", type = int, default=0)
 parser.add_argument("--gpu", type=int, default=0)
@@ -267,7 +267,7 @@ for epoch in range(0, args.epochs):
 	iterator_train = iter(data.DataLoader(data_train, 
 									batch_size=args.batch_size, 
 									num_workers=args.num_workers, 
-									sampler = SubsetSampler(0, data_size)))
+									shuffle = True))
 
 	# TRAINING LOOP
 	print("\nEPOCH:{} of {} - starting training loop from iteration:0 to iteration:{}\n".format(epoch, args.epochs, iters_per_epoch))
