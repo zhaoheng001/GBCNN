@@ -80,48 +80,6 @@ parser.add_argument("--size", type=int, default=256)
 parser.add_argument("--gpu", type=int, default=0)
 parser.add_argument("--network", type=str, choices=["pcnet", "sparsenet", "sdpf"], default="sparsenet")
 
-#RFCNN
-#denoising 0.1
-# test_loader: 4100
-# mean psnr: 29.17602484694699
-# mean ssim: 0.8482431074785417
-# mean loss: 0.0013560537866418954
-#denoising 0.196
-# mean psnr: 26.0354820078516
-# mean ssim: 0.7414716699863844
-# mean loss: 0.0027980207117691796
-
-#deblur 3
-# psnr: 31.291014967585028
-# psnr: 28.865563389512737
-# psnr: 26.456570863013948
-# psnr: 21.417760515698898
-# psnr: 27.28839345568074
-# psnr: 22.969139736821177
-
-#IRCNN
-#denoising
-# test_loader: 4100
-# mean psnr: 29.183404306217795
-# mean ssim: 0.8480909562821427
-# mean loss: 0.0013611800414857897
-#denoising 0.196
-# mean psnr: 26.033579423162163
-# mean ssim: 0.7414924507658927
-# mean loss: 0.0027992954401642924
-#inp
-# test_loader: 4100
-# mean psnr: 41.1952273945848
-# mean loss: 0.0011901483604493124
-# mean time: 217.63598895072937
-#deblur 3 ip.o1610863
-# psnr: 31.3231724393269
-# psnr: 28.878426407418935
-# psnr: 26.46169540164212
-# psnr: 21.42503588373311
-# psnr: 27.317538634760798
-# psnr: 22.9699460340848
-
 
 args = parser.parse_args()
 
