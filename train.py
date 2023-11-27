@@ -49,23 +49,6 @@ def total_variation_loss(image):
     # shift one pixel and get loss1 difference (for both x and y direction)
     loss = l1(image[:, :, :, :-1], image[:, :, :, 1:]) + l1(image[:, :, :-1, :], image[:, :, 1:, :])
     return loss	
-#define psnr function for a batch of images
-# def PSNR(output, gt):
-# 	output = output.cpu().numpy()
-# 	output = np.transpose(output, (0, 2, 3, 1))
-# 	output = np.squeeze(output)
-# 	output = output * 255
-# 	output = output.astype(np.uint8)
-# 	gt = gt.cpu().numpy()
-# 	gt = np.transpose(gt, (0, 2, 3, 1))
-# 	gt = np.squeeze(gt)
-# 	gt = gt * 255
-# 	gt = gt.astype(np.uint8)
-# 	psnr = 0.0
-# 	for i in range(output.shape[0]):
-# 		psnr += cv2.PSNR(output[i], gt[i])
-# 	psnr = psnr / output.shape[0]
-# 	return psnr
 
 def psnr(output, gt):
 	#gt = gt.cpu().numpy()
@@ -74,47 +57,6 @@ def psnr(output, gt):
 		psnr += sk_psnr(output[i].squeeze().cpu().numpy(), gt[i].squeeze().cpu().numpy())
 	psnr = psnr / output.shape[0]
 	return psnr
-
-
-
-#define a function to do testing
-# def test(model, test_loader, device, args):
-# 	model.eval()
-# 	psnr = []
-# 	loss_test = []
-# 	with torch.no_grad():
-# 		for i, (image, mask, gt) in enumerate(test_loader):
-# 			image, mask, gt = [x.to(device) for x in [image, mask, gt]]
-# 			print("image shape:", image.shape)
-# 			output = model(image, mask)
-# 			print("output shape:", output.shape)
-# 			#calculate psnr
-# 			psnr.append(PSNR(output, gt))
-# 			print("psnr:", psnr[-1])
-# 			loss_fn = CalculateLoss().to(device)
-# 			loss_dict = loss_fn(image, mask, output, gt)
-# 			loss = 0.0
-# 			for key, value in loss_dict.items():
-# 				loss += value
-# 			loss_test.append(loss.item())
-# 			print("loss:", loss_test[-1])
-# 			output = output.cpu().numpy()
-# 			output = np.transpose(output, (0, 2, 3, 1))
-# 			output = np.squeeze(output)
-# 			output = output * 255
-# 			output = output.astype(np.uint8)
-# 		for j in range(output.shape[0]):
-# 			cv2.imwrite("/project/labate/heng/inpainting-partial-conv/pred_images" + "/image_{}.png".format(j), output[j])
-# 			#print mean psnr of the whole test set
-# 	return np.mean(psnr), np.mean(loss_test)
-
-
-
-
-#sparsenet: 10epoch 29.1205
-#sdpfnet: 10epoch 29.1307
-
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--train_path", type=str, default="/project/labate/heng/Places2_gray/train/image")
@@ -152,10 +94,6 @@ parser.add_argument("--val_num", type=int, default=4100)
 args = parser.parse_args()
 
 cwd = os.getcwd()
-#IRCNN PSNR: 28.8813, SSIM: 0.8389
-#RFCNN PSNR: 29.1927, SSIM: 0.8492
-
-
 #Tensorboard SummaryWriter setup
 # if not os.path.exists(cwd + args.log_dir):
 # 	os.makedirs(cwd + args.log_dir)
