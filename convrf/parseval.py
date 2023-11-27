@@ -207,12 +207,12 @@ class Parseval:
 #            np.save('frame' + fname + '.npy', parseval[0:np.prod(self.shape)])
             return parseval[0:np.prod(self.shape)]
         elif self.bank == "pdefine":
-            pd =  np.load("/project/labate/heng/inpainting-partial-conv/convrf/5x5_SDPFdict.npy")
+            pd =  np.load("5x5_SDPFdict.npy")
             #switch from (5,5,49) to (49,5,5)
             pd = np.transpose(pd, (2,0,1))
             return pd
         elif self.bank == "pdct":
-            pd =  np.load("/project/labate/heng/inpainting-partial-conv/convrf/5x5_DCTdict.npy")
+            pd =  np.load("5x5_DCTdict.npy")
             assert pd.shape[2] == 5, "shape has to be 5, but found {}".format(pd.shape[2])
             return pd
 
