@@ -1,6 +1,5 @@
 # PyTorch implementation of "Integration of Model- and Learning-based Methods in Image Restoration"
 
-Under-construction
 This repository include PyTorch implementation of
 
 "[Integration of Model- and Learning-based Methods in Image Restoration](https://www.math.uh.edu/~dlabate/Integration_of_Model__and_Learning__based_methods_in_image_restoration.pdf)" by Labate, Demetrio and Zhao, Heng
